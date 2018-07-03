@@ -7,22 +7,24 @@ $animals = array(
     "Antarctica" => array("Arctocephalus gazella", "Orcinus orca")
 );
 
-foreach ($animals as $continents => $all_species) {
-    foreach ($all_species as $species) {
-        $species_separated = [];
-        $species_explode = explode(' ', $species);
-        $latinClassification[] = $species_explode;
-    }
+$latinClassification = [];
+foreach ($animals as $continents) {
+    $latinClassification = array_merge($latinClassification, array_filter($continents, function ($species){return count(explode(' ', $species)) === 2;}) );
 }
 
-foreach ($latinClassification as $speciesCount){
-    if (count($speciesCount)===2){
-        $species_comma = implode(",", $speciesCount);
-        $species_str = str_replace(',', ' ', $species_comma);
-        $latinClassificationTwo[] = $species_str;
-    }
+foreach($latinClassification as $name_parts){
+    $parts = explode(' ', $name_parts);
+    $first[] = $parts[0];
+    $second[] = $parts[1];
 }
 
-print_r ($latinClassificationTwo);
+shuffle($second);
+
+for($i = 0; $i < count($latinClassification); $i++){
+    echo $first[$i] . ' ' . $second[$i];
+    if($i < (count($latinClassification) -1)){
+        echo ", ";
+    }
+}
 
 ?>
