@@ -27,8 +27,8 @@ foreach ($animalsNewArr as $continents => $animalsNewName){
         }
     }
     $animalsResult = implode(', ', $animalsShuffeled[$continents]);
-    echo '<h2>'.$continents.'</h2>'.'</br>';
-    echo $animalsResult.'</br>';
+    echo '<h2>'.$continents.'</h2>';
+    echo $animalsResult;
 }
 
 ?>
