@@ -7,24 +7,28 @@ $animals = array(
     "Antarctica" => array("Arctocephalus gazella", "Orcinus orca")
 );
 
-$latinClassification = [];
-foreach ($animals as $continents) {
-    $latinClassification = array_merge($latinClassification, array_filter($continents, function ($species){return count(explode(' ', $species)) === 2;}) );
-}
-
-foreach($latinClassification as $name_parts){
-    $parts = explode(' ', $name_parts);
-    $first[] = $parts[0];
-    $second[] = $parts[1];
-}
-
-shuffle($second);
-
-for($i = 0; $i < count($latinClassification); $i++){
-    echo $first[$i] . ' ' . $second[$i];
-    if($i < (count($latinClassification) -1)){
-        echo ", ";
+foreach ($animals as $continents => $animal){
+    foreach ($animal as $animalParts) {
+        $animalNames = explode(' ', $animalParts);
+        if (count($animalNames)==2) {
+            $part1[] = $animalNames[0];
+            $part2[] = $animalNames[1];
+            $animalsNewArr[$continents][] = $animalNames[0];
+        }
     }
+}
+
+shuffle($part2);
+
+foreach ($animalsNewArr as $continents => $animalsNewName){
+    for ($i=0; $i<count($part1); $i++){
+        if(in_array($part1[$i], $animalsNewName)){
+            $animalsShuffeled[$continents][] = $part1[$i]. ' ' .$part2[$i];
+        }
+    }
+    $animalsResult = implode(', ', $animalsShuffeled[$continents]);
+    echo '<h2>'.$continents.'</h2>'.'</br>';
+    echo $animalsResult.'</br>';
 }
 
 ?>
